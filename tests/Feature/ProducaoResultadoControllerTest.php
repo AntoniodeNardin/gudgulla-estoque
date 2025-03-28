@@ -20,12 +20,12 @@ class ProducaoResultadoControllerTest extends TestCase
         $response = $this->postJson('/api/producoes-resultados', [
             'producao_id' => $producao->id,
             'lote_id' => $lote->id,
-            'quantidade_resultado' => 90,
+            'quantidade_gerada' => 90,
         ]);
 
         $response->assertStatus(201);
         $response->assertJson([
-            'quantidade_resultado' => 90,
+            'quantidade_gerada' => 90,
         ]);
     }
 
@@ -47,7 +47,7 @@ class ProducaoResultadoControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'quantidade_resultado' => $producaoResultado->quantidade_resultado,
+            'quantidade_gerada' => $producaoResultado->quantidade_gerada,
         ]);
     }
 
@@ -56,12 +56,12 @@ class ProducaoResultadoControllerTest extends TestCase
         $producaoResultado = ProducaoResultado::factory()->create();
 
         $response = $this->putJson('/api/producoes-resultados/' . $producaoResultado->id, [
-            'quantidade_resultado' => 80,
+            'quantidade_gerada' => 80,
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
-            'quantidade_resultado' => 80,
+            'quantidade_gerada' => 80,
         ]);
     }
 

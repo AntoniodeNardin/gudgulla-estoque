@@ -15,18 +15,13 @@ class ProducaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'descricao' => 'required|string|max:255',
-            'quantidade' => 'required|numeric',
-            'data_inicio' => 'required|date',
-            'data_fim' => 'nullable|date',
+            'observacao' => 'required|string|max:255',
+            'quantidade_produzida' => 'required|numeric',
+            'data_producao' => 'required|date',
+
         ]);
 
-        $producao = Producao::create([
-            'descricao' => $request->descricao,
-            'quantidade' => $request->quantidade,
-            'data_inicio' => $request->data_inicio,
-            'data_fim' => $request->data_fim,
-        ]);
+        $producao = Producao::create($request->all());
 
         return response()->json($producao, 201);
     }
@@ -43,18 +38,12 @@ class ProducaoController extends Controller
         $producao = Producao::findOrFail($id);
 
         $request->validate([
-            'descricao' => 'required|string|max:255',
-            'quantidade' => 'required|numeric',
-            'data_inicio' => 'required|date',
-            'data_fim' => 'nullable|date',
+            'descricao' => 'nullable|string|max:255',
+            'quantidade_produzida' => 'nullable|numeric',
+            'data_producao' => 'nullable|date',
         ]);
 
-        $producao->update([
-            'descricao' => $request->descricao,
-            'quantidade' => $request->quantidade,
-            'data_inicio' => $request->data_inicio,
-            'data_fim' => $request->data_fim,
-        ]);
+        $producao->update($request->all());
 
         return response()->json($producao);
     }

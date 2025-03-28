@@ -16,15 +16,11 @@ class ProducaoResultadoController extends Controller
     {
         $request->validate([
             'producao_id' => 'required|exists:producoes,id',
-            'quantidade_realizada' => 'required|numeric',
-            'data' => 'required|date',
+            'quantidade_gerada' => 'required|numeric',
+            'lote_id' => 'required|exists:lotes,id',
         ]);
 
-        $resultado = ProducaoResultado::create([
-            'producao_id' => $request->producao_id,
-            'quantidade_realizada' => $request->quantidade_realizada,
-            'data' => $request->data,
-        ]);
+        $resultado = ProducaoResultado::create($request->all());
 
         return response()->json($resultado, 201);
     }
@@ -41,16 +37,12 @@ class ProducaoResultadoController extends Controller
         $resultado = ProducaoResultado::findOrFail($id);
 
         $request->validate([
-            'producao_id' => 'required|exists:producoes,id',
-            'quantidade_realizada' => 'required|numeric',
-            'data' => 'required|date',
+            'producao_id' => 'nullable|exists:producoes,id',
+            'quantidade_gerada' => 'nullable|numeric',
+            'lote_id' => 'nullable|exists:lotes,id',
         ]);
 
-        $resultado->update([
-            'producao_id' => $request->producao_id,
-            'quantidade_realizada' => $request->quantidade_realizada,
-            'data' => $request->data,
-        ]);
+        $resultado->update($request->all());
 
         return response()->json($resultado);
     }

@@ -44,24 +44,24 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
 
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'email' => 'required|email|unique:usuarios,email,' . $id,
+        $validatedData = $request->validate([
+            'nome' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:usuarios,email,' . $id,
             'senha_hash' => 'nullable|string',
-            'tipo' => 'required|string|max:255',
-            'ativo' => 'required|boolean',
+            'tipo' => 'nullable|string|max:255',
+            'ativo' => 'nullable|boolean',
         ]);
 
-        $usuario->update([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'senha_hash' => $request->senha_hash ? bcrypt($request->senha_hash) : $usuario->senha_hash,
-            'tipo' => $request->tipo,
-            'ativo' => $request->ativo,
-        ]);
+        // Se a senha foi enviada, criptografa
+        if ($request->filled('senha_hash')) {
+            $validatedData['senha_hash'] = bcrypt($request->senha_hash);
+        }
+
+        $usuario->update($validatedData);
 
         return response()->json($usuario);
     }
+
 
     public function destroy($id)
     {

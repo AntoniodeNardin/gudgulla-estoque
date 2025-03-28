@@ -9,6 +9,8 @@ class Producao extends Model
 {
     use HasFactory;
 
+    protected $table = 'producoes';
+
     protected $fillable = [
         'item_id', 'quantidade_produzida', 'data_producao', 'usuario_id', 'observacao'
     ];
