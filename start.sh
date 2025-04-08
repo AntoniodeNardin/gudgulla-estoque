@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "⏳ Aguardando banco de dados..."
-sleep 10
+echo "📁 Garantindo existência do arquivo SQLite..."
+touch /var/www/html/database/database.sqlite
 
-echo "🚀 Rodando migrations..."
+echo "🚀 Executando migrations..."
 php artisan migrate --force
 
 echo "✅ Iniciando Apache..."
