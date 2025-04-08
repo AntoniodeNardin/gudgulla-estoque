@@ -3,8 +3,9 @@ FROM php:8.2-apache
 
 # Instala dependências
 RUN apt-get update && apt-get install -y \
-    git unzip zip curl libzip-dev libpng-dev libonig-dev libxml2-dev \
+    git unzip zip curl libzip-dev libpng-dev libonig-dev libxml2-dev libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql zip
+
 
 # Instala o Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
